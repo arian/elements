@@ -32,7 +32,10 @@
 
 		<script>
 
-			mocha.setup('bdd')
+			mocha.setup({
+				ui: 'bdd',
+				ignoreLeaks: true // ignore, because of iframes in the window with IE
+			})
 
 			var queries = ['./nodes', './attributes']
 			var dones = {}
@@ -47,7 +50,7 @@
 
 					it('should pass all tests for ' + queries[i], function(done){
 						var iframe = document.createElement('iframe')
-						var search = '?test=' + query + '&t=' + (+new Date).toString(36)
+						var search = '?test=' + encodeURI(query) + '&t=' + (+new Date).toString(36)
 						iframe.src = './test.html' + search
 						document.body.appendChild(iframe)
 						dones[search] = function(result){

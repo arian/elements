@@ -14,17 +14,28 @@
 
 		<script>
 
-			mocha.setup('bdd')
+			var m = new mocha
+			m.ui('bdd')
+			m._reporter = mocha.reporters.HTML
+			m.loadFiles = function(){}
+			m.suite.emit('pre-require', window)
 
 			var script = document.createElement('script')
 			script.src = './test.js' + location.search
-			script.onload = function(){
-				mocha.run().on('end', function(){
+			var loaded = false
+			var load = function(){
+				loaded = true
+				var runner = m.run(function(failures){
 					if (window.parent){
-						parent.finish(location.search, this.failures)
+						parent.finish(location.search, failures)
 					}
 				})
 			}
+			script.onload = load
+			script.onreadystatechange = function(){
+				if (this.readyState == 'complete' || this.readyState == 'loaded') load()
+			}
+
 			document.body.appendChild(script)
 
 		</script>
