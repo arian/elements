@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<meta charset="utf-8">
+		<title>Testing</title>
+
+		<style>
+			body {
+				padding-left: 50px;
+			}
+			iframe {
+				width: 100%;
+				border: 1px solid #ddd;
+			}
+			iframe:hover {
+				height: 500px;
+			}
+			#mocha {
+				margin-bottom: 50px;
+			}
+		</style>
+
+		<link rel="stylesheet" href="./mocha.css" type="text/css">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="./mocha.js"></script>
+		<script src="https://raw.github.com/LearnBoost/expect.js/d2440da086bf8dc38c6085641f23b968a0f48b29/expect.js"></script>
+
+	</head>
+	<body>
+
+		<div id="mocha"></div>
+
+		<script>
+
+			mocha.setup('bdd')
+
+			var queries = ['./nodes', './attributes']
+			var dones = {}
+
+			var finish = function(search, result){
+				dones[search](result)
+			}
+
+			describe('All test suites', function(){
+
+				for (var i = 0; i < queries.length; i++) (function(query){
+
+					it('should pass all tests for ' + queries[i], function(done){
+						var iframe = document.createElement('iframe')
+						var search = '?test=' + query + '&t=' + +(new Date)
+						iframe.src = './test.html' + search;
+						document.body.appendChild(iframe)
+						dones[search] = function(result){
+							try {
+								expect(result).to.be(0)
+								done()
+							} catch(e){
+								done(e)
+							}
+						}
+					})
+
+				})(queries[i])
+
+			})
+
+			mocha.run()
+
+		</script>
+
+	</body>
+</html>

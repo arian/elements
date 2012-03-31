@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<meta charset="utf-8">
+		<title>Testing</title>
+		<link rel="stylesheet" href="./mocha.css" type="text/css">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="./mocha.js"></script>
+
+	</head>
+	<body>
+
+		<div id="mocha"></div>
+
+		<script>
+
+			mocha.setup('bdd')
+
+			var script = document.createElement('script')
+			script.src = './test.js' + location.search
+			script.onload = function(){
+				mocha.run().on('end', function(){
+					if (window.parent){
+						parent.finish(location.search, this.failures)
+					}
+				})
+			}
+			document.body.appendChild(script)
+
+		</script>
+
+	</body>
+</html>
