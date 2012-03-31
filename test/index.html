@@ -24,7 +24,7 @@
 		<link rel="stylesheet" href="./mocha.css" type="text/css">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 		<script src="./mocha.js"></script>
-		<script src="https://raw.github.com/LearnBoost/expect.js/d2440da086bf8dc38c6085641f23b968a0f48b29/expect.js"></script>
+		<script src="./expect.js"></script>
 
 	</head>
 	<body>
@@ -48,8 +48,8 @@
 
 					it('should pass all tests for ' + queries[i], function(done){
 						var iframe = document.createElement('iframe')
-						var search = '?test=' + query + '&t=' + +(new Date)
-						iframe.src = './test.html' + search;
+						var search = '?test=' + query + '&t=' + (+new Date).toString(36)
+						iframe.src = './test.html' + search
 						document.body.appendChild(iframe)
 						dones[search] = function(result){
 							try {
