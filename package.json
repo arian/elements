@@ -21,7 +21,12 @@
   "dependencies": {
     "prime": "0.0.5-alpha"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "testbox": "*",
+    "mocha": "*",
+    "expect.js": "*",
+    "wrapup": "*"
+  },
   "optionalDependencies": {},
   "engines": {
     "node": "*"
