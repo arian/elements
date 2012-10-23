@@ -1,9 +1,11 @@
 {
 	"asi": true,
 	"node": true,
-	"browser": true,
 	"eqnull": true,
+	"boss": true,
 	"predef": [
+		"document",
+		"window",
 		"describe",
 		"it",
 		"xit",
