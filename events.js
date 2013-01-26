@@ -82,4 +82,11 @@ $.implement({
 
 })
 
+$.clean.events = function(element){
+    var domListeners = element._domListeners
+    for (var event in domListeners){
+        removeEventListener(element[0], event, domListeners[event])
+    }
+}
+
 module.exports = $

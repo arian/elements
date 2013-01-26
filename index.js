@@ -84,9 +84,32 @@ var elements = prime({
 
     unlink: function(){
         return this.map(function(node, i){
+            var self = $(node)
+            for (var clean in $.clean) $.clean[clean](node)
             delete instances[uniqueID(node)]
             return node
         })
+    },
+
+    protect: function(){
+        return this.forEach(function(node){
+            $(node)._protected = true
+        })
+    },
+
+    unprotect: function(){
+        return this.forEach(function(node){
+            delete $(node)._protected
+        })
+    },
+
+    attached: function(){
+        var node = this[0]
+        var doc = node.ownerDocument
+        do {
+            if (node === doc) return true
+        } while (node = node.parentNode)
+        return false
     },
 
     // straight es5 prototypes (or emulated methods)
@@ -98,5 +121,14 @@ var elements = prime({
     some: array.some
 
 })
+
+$.gc = function(){
+    for (var uid in instances){
+        var element = instances[uid]
+        if (!element.attached() && !element._protected) element.unlink()
+    }
+}
+
+$.clean = {}
 
 module.exports = $
