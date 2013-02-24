@@ -3,6 +3,7 @@
 	"node": true,
 	"browser": true,
 	"eqnull": true,
+	"esnext": true,
 	"predef": [
 		"describe",
 		"it",

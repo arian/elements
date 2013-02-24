@@ -4,7 +4,10 @@ events
 
 var $       = require("./index"),
     prime   = require("prime"),
-    Emitter = require("prime/emitter")
+    Emitter = require("prime/emitter"),
+    dbc     = require("dbc")
+
+const DEV = false
 
 var html = document.documentElement
 
@@ -25,6 +28,10 @@ var removeEventListener = html.removeEventListener ? function(node, event, handl
 $.implement({
 
     on: function(event, handle){
+        if (DEV){
+            dbc.assertString(event)
+            dbc.assertFunction(handle)
+        }
 
         this.forEach(function(node){
             var self = $(node)
@@ -41,6 +48,10 @@ $.implement({
     },
 
     off: function(event, handle){
+        if (DEV){
+            dbc.assertString(event)
+            dbc.assertFunction(handle)
+        }
 
         this.forEach(function(node){
 

@@ -4,9 +4,13 @@ zen
 
 var $     = require("./index"),
     parse = require("slick/parser"),
-    array = require("prime/es5/array")
+    array = require("prime/es5/array"),
+    dbc   = require("dbc")
+
+const DEV = false
 
 module.exports = function(expression, doc){
+    if (DEV) dbc.assertString(expression)
 
     return $(array.map(parse(expression), function(expression){
 

@@ -3,13 +3,21 @@ delegation
 */"use strict"
 
 var $   = require("./events"),
-    Map = require("prime/map")
+    Map = require("prime/map"),
+    dbc = require("dbc")
 
 require('./traversal')
+
+const DEV = false
 
 $.implement({
 
     delegate: function(event, selector, handle){
+        if (DEV){
+            dbc.assertString(event)
+            dbc.assertString(selector)
+            dbc.assertFunction(handle)
+        }
 
         this.forEach(function(node){
 
@@ -36,6 +44,11 @@ $.implement({
     },
 
     undelegate: function(event, selector, handle){
+        if (DEV){
+            dbc.assertString(event)
+            dbc.assertString(selector)
+            dbc.assertFunction(handle)
+        }
 
         this.forEach(function(node){
 

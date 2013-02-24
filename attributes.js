@@ -5,6 +5,9 @@ attributes
 var $      = require("./index"),
     string = require("prime/shell/string"),
     array  = require("prime/es5/array")
+    cbd    = require("cbd")
+
+const dev = false
 
 // attributes
 
@@ -18,11 +21,13 @@ $.implement({
     },
 
     getAttribute: function(name){
+        if (DEV) cbd.assertLength(this, 1)
         var attr = this[0].getAttributeNode(name)
         return (attr && attr.specified) ? attr.value : null
     },
 
     hasAttribute: function(name){
+        if (DEV) cbd.assertLength(this, 1)
         var node = this[0]
         if (node.hasAttribute) return node.hasAttribute(name)
         var attr = node.getAttributeNode(name)
@@ -50,7 +55,7 @@ array.forEach("type,value,name,href,title,id".split(","), function(name){
             })
             return this
         }
-
+        if (DEV) cbd.assertLength(this, 1)
         return this[0][name]
     }
 
@@ -67,7 +72,7 @@ array.forEach("checked,disabled,selected".split(","), function(name){
             })
             return this
         }
-
+        if (DEV) cbd.assertLength(this, 1)
         return !!this[0][name]
     }
 
@@ -147,6 +152,7 @@ $.implement({
 $.implement({
 
     classNames: function(){
+        if (DEV) cbd.assertLength(this, 1)
         return classes(this[0].className)
     },
 
@@ -197,6 +203,7 @@ var textProperty = (document.createElement('div').textContent == null) ? 'innerT
 $.implement({
 
     tag: function(){
+        if (DEV) cbd.assertLength(this, 1)
         return this[0].tagName.toLowerCase()
     },
 
@@ -207,6 +214,7 @@ $.implement({
             })
             return this
         }
+        if (DEV) cbd.assertLength(this, 1)
         return this[0].innerHTML
     },
 
@@ -217,6 +225,7 @@ $.implement({
             })
             return this
         }
+        if (DEV) cbd.assertLength(this, 1)
         return this[0][textProperty]
     }
 

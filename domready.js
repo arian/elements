@@ -3,6 +3,9 @@ domready
 */"use strict"
 
 var $ = require("./events")
+var dbc = require("dbc")
+
+const DEV = false
 
 var readystatechange = 'onreadystatechange' in document,
     shouldPoll       = false,
@@ -93,6 +96,7 @@ doc.on('DOMContentLoaded', domready)
 win.on('load', domready)
 
 module.exports = function(ready){
+    if (DEV) dbc.assertFunction(ready)
     (loaded) ? ready() : readys.push(ready)
     return null
 }
